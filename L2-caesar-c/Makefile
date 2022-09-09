@@ -5,7 +5,7 @@ FONT_CYAN := `tput setaf 6`
 FONT_RED := `tput setaf 1`
 FONT_RESET := `tput sgr0`
 TIS_ANALYZER := tis-analyzer
-TIS_VAL_OPTS = -64 -I. -val -slevel 100 caesar.c main.c -no-val-print
+TIS_VAL_OPTS = -64 -cpp-extra-args="-I." -val -slevel 100 caesar.c main.c -no-val-print
 
 .PHONY: all cov tis tis_gui tis_report
 all:
