@@ -15,14 +15,12 @@ all:
 
 cov:
 	@echo -e "$(FONT_CYAN)gcc -I. -fprofile-arcs -ftest-coverage caesar.c main.c -o caesar && ./caesar$(FONT_RESET)"
-	@gcc -I. -fprofile-arcs -ftest-coverage caesar.c
-	@gcc -I. -fprofile-arcs -ftest-coverage main.c
-	@gcc -I. caesar.o main.o -o caesar && ./caesar
+	@gcc -I. -fprofile-arcs -ftest-coverage caesar.c main.c -o caesar && ./caesar
 	@echo ""
 	@echo -e "$(FONT_CYAN) gcov caesar.c $(FONT_RESET)"
 	@gcov caesar.c
 
-tis:
+tis_run:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report
 
@@ -30,9 +28,9 @@ tis_gui:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui
 
-tis_report: tis
+tis: tis_run
 	tis-report _results/
-	xdg-open tis_report.html
+	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
 
 .PHONY: clean
 clean:
