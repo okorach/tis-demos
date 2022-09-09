@@ -35,9 +35,11 @@ int main(void)
     gen_test(str, 7);
 
 #ifdef __TRUSTINSOFT_ANALYZER__
+#ifdef LEVEL2
     int any_offset;
     tis_make_unknown(&any_offset, sizeof(any_offset));
     gen_test(str, any_offset);
+#endif
 #endif
 
     return 0;
