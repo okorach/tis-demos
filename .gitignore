@@ -3,3 +3,4 @@
 **/*.gc*
 **/tis_report.html
 **/caesar
+**/.tis-kernel/
