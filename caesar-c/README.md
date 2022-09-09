@@ -2,7 +2,7 @@
 
 ## Overview
 
-This directory demonstrates the TrustInSoft Analysis Level 2 analysis capabilities
+This directory demonstrates the TrustInSoft Analysis Level 1 then Level 2 analysis capabilities
 The source code used for the demo is the very basic Caesar Cipher algorithm
 
 > The Caesar cipher is one of the simplest and most widely known
@@ -23,7 +23,7 @@ Cipher text:  f d h v d u
 
 The starting point is the Caesar Cipher code and a test driver that verifies that the Ciphering/Deciphering
 works well for 2 discrete values of the shift (one positive (7) and one negative (-3)).
-- Run `make` to tun the traditional tests with the 2 discrete values
+- Run `make` to run the traditional tests with the 2 discrete values
 
 The 2 tests are passing correctly (ie the implementation of the Caesar Cipher seems corrects)
 The source code is entirely covered by the 2 tests which **could** imply the tests are exhaustive.
