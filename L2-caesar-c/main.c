@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef __TRUSTINSOFT_ANALYZER__
+#include <tis_builtin.h>
+#endif
+
 #include "caesar.h"
 
 void gen_test(char *str, int shift)
@@ -30,10 +34,10 @@ int main(void)
     printf("\nTest 2: Shift with a positive input\n");
     gen_test(str, 7);
 
-#ifdef _TRUSTINSOFT_ANALYZER_
+#ifdef __TRUSTINSOFT_ANALYZER__
     int any_offset;
     tis_make_unknown(&any_offset, sizeof(any_offset));
-    get_test(str, any_offset);
+    gen_test(str, any_offset);
 #endif
 
     return 0;
