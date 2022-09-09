@@ -29,9 +29,11 @@ int main(void)
     gen_test(str, 7);
 
 #ifdef __TRUSTINSOFT_ANALYZER__
+#ifdef LEVEL2
     int any_shift;
     tis_make_unknown((char *)&any_shift, sizeof(any_shift));
     gen_test(str, any_shift);
+#endif
 #endif
 
     return 0;
