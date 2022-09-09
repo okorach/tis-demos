@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include <caesar.hpp>
+#include "caesar.hpp"
 
 // Ciphers a buffer with a right shift specified by the user
 //  buf: The buffer to encrypt
@@ -7,21 +7,18 @@
 //  offset: The shift to perform
 // returns The pointer to the encrypted string
 
-template <class T>
-std::shared_ptr<T> Caesar<T>::encrypt(const T *buf, int bufsize) const
+char * Caesar::encrypt(const char *buf, int bufsize) const
 {
     int shift = absolute_int(offset);
     int i = 0;
 
-    std::shared_ptr<T> crypted_buffer(new T[bufsize], [](T *i)
-                                      { delete[] i; });
+    char * crypted_buffer(new char[bufsize]);
     while (buf[i])
     {
-        auto s = (crypted_buffer.get());
-        s[i] = buf[i] + (T)shift;
+        crypted_buffer[i] = buf[i] + shift;
         i++;
     }
-    crypted_buffer.get()[i] = 0;
+    crypted_buffer[i] = 0;
     return crypted_buffer;
 }
 
@@ -30,26 +27,22 @@ std::shared_ptr<T> Caesar<T>::encrypt(const T *buf, int bufsize) const
 //  bufsize: The buffer size
 //  offset: The shift to perform
 // returns The pointer to the encrypted string
-template <class T>
-std::shared_ptr<T> Caesar<T>::decrypt(const T *buf, int bufsize) const
+char * Caesar::decrypt(const char *buf, int bufsize) const
 {
-    int shift = Caesar<T>::absolute_int(offset);
+    int shift = Caesar::absolute_int(offset);
     int i = 0;
 
-    std::shared_ptr<T> crypted_buffer(new T[bufsize], [](T *i)
-                                      { delete[] i; });
+    char * crypted_buffer(new char[bufsize]);
     while (buf[i])
     {
-        auto s = (crypted_buffer.get());
-        s[i] = buf[i] - (T)shift;
+        crypted_buffer[i] = buf[i] - shift;
         i++;
     }
-    crypted_buffer.get()[i] = 0;
+    crypted_buffer[i] = 0;
     return crypted_buffer;
 }
 
-template <class T>
-int Caesar<T>::absolute_int(int x) const
+int Caesar::absolute_int(int x) const
 {
     int abs_x;
     if (x < 0)
