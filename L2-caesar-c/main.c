@@ -23,17 +23,17 @@ void gen_test(char *str, int shift)
 
 int main(void)
 {
-    char orig_str[] = "People of Earth, your attention please";
+    char str[] = "People of Earth, your attention please";
 
     printf("Test 1: Shift with a negative input\n");
-    gen_test(orig_str, -3);
+    gen_test(str, -3);
     printf("\nTest 2: Shift with a positive input\n");
-    gen_test(orig_str, 7);
+    gen_test(str, 7);
 
 #ifdef _TRUSTINSOFT_ANALYZER_
     int any_offset;
     tis_make_unknown(&any_offset, sizeof(any_offset));
-    get_test(orig_str, any_offset);
+    get_test(str, any_offset);
 #endif
 
     return 0;
