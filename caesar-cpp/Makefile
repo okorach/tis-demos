@@ -24,17 +24,30 @@ cov:
 	@echo -e "$(FONT_CYAN) gcov caesar.cpp $(FONT_RESET)"
 	@gcov caesar.cpp
 
-tis_run:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report -gui$(FONT_RESET)"
+tis_report_l1:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report | sed '/stack:.*main.cpp/q'
-	
-tis_gui:
+
+tis_report_l2:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_VAL_OPTS) -tis-report$(FONT_RESET)"
+	@$(TIS_ANALYZER) -D LEVEL2=1 $(TIS_VAL_OPTS) -tis-report | sed '/stack:.*main.cpp/q'
+	@tis-report _results/
+	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
+
+tis_gui_l2:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_VAL_OPTS) -gui$(FONT_RESET)"
+	@$(TIS_ANALYZER) -D LEVEL2=1 $(TIS_VAL_OPTS) -gui | sed '/stack:.*main.cpp/q'
+
+tis_gui_l1:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui | sed '/stack:.*main.cpp/q'
 
-tis: tis_run
+tis_l1: tis_report_l1
 	tis-report _results/
 	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
+
+tis_l2: tis_gui_l2
+
 
 clean:
 	rm -rf a.out a.out.dSYM caesar caesar.dSYM *.gcov *.gcda *.gcno compile_commands.json tis_report.html _results
