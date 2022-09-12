@@ -3,6 +3,8 @@
 
 #define NB_LTR ('z' - 'a' + 1)
 
+/* Computes absolute value of a signed integer */
+
 int absolute_int(int x)
 {
     int abs_x;
