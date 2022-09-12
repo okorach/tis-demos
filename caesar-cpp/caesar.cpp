@@ -3,12 +3,6 @@
 #include <algorithm>
 #include <type_traits>
 
-// Ciphers a buffer with a right shift specified by the user
-//  buf: The buffer to encrypt
-//  bufsize: The buffer size
-//  offset: The shift to perform
-// returns The pointer to the encrypted string
-
 // TODO: CharT
 // Ciphers a buffer with a right shift specified by the user
 std::string Caesar::encrypt(const std::string & input, int offset)
