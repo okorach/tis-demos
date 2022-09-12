@@ -7,7 +7,7 @@
 
 #include "caesar.hpp"
 
-int gen_test(std::string str, int user_shift)
+int gen_test(const std::string & str, int user_shift)
 {
     std::cout << "Encrypt text: '" << str << "'\n";
     std::string res1 = Caesar::encrypt(str, user_shift);
