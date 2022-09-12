@@ -5,9 +5,11 @@ FONT_CYAN := `tput setaf 6`
 FONT_RED := `tput setaf 1`
 FONT_RESET := `tput sgr0`
 TIS_ANALYZER := tis-analyzer
-TIS_VAL_OPTS = -64 -cpp-extra-args="-I." -val -slevel 100 caesar.c main.c -no-val-print
+TISA_OPTS = -64 -cpp-extra-args="-I." caesar.c main.c
+TISA_L2_OPTS = -val -slevel 100 $(TISA_OPTS)
+TISA_L1_OPTS = --interpreter $(TISA_OPTS)
 
-.PHONY: all cov clean tis_l1 tis_l2 tis_report_l1 tis_report_l2 tis_gui_l1 tis_gui_l2
+.PHONY: test cov clean tis_l1 tis_l2 tis_l1_report tis_l2_report tis_l1_gui tis_l2_gui
 
 all:
 	@echo -e "$(FONT_CYAN)gcc -I. caesar.c main.c -o caesar && ./caesar$(FONT_RESET)"
@@ -17,32 +19,39 @@ cov:
 	@echo -e "$(FONT_CYAN)gcc -I. -fprofile-arcs -ftest-coverage caesar.c main.c -o caesar && ./caesar$(FONT_RESET)"
 	@gcc -I. -fprofile-arcs -ftest-coverage caesar.c main.c -o caesar && ./caesar
 	@echo ""
-	@echo -e "$(FONT_CYAN) gcov caesar.c $(FONT_RESET)"
+	@echo -e "$(FONT_CYAN)gcov caesar.c $(FONT_RESET)"
 	@gcov caesar.c
 
-tis_report_l1:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report
+tis_l1_report:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TISA_L1_OPTS) -tis-report -info-json-results _results/caesar.json -info-csv-all _results/caesar$(FONT_RESET)"
+	$(TIS_ANALYZER) $(TISA_L1_OPTS) -tis-report -info-json-results _results/caesar.json -info-csv-all _results/caesar
 
-tis_report_l2:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_VAL_OPTS) -tis-report$(FONT_RESET)"
-	@$(TIS_ANALYZER) -D LEVEL2=1 $(TIS_VAL_OPTS) -tis-report | sed '/stack:.*main.c/q'
+tis_l2_report:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TISA_L2_OPTS) -tis-report$(FONT_RESET)"
+	@$(TIS_ANALYZER) -D LEVEL2=1 $(TISA_L2_OPTS) -tis-report -info-json-results _results/caesar.json -info-csv-all _results/caesar
 	@tis-report _results/
-	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
+	@printf "\n\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
+#	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
 
-tis_gui_l2:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_VAL_OPTS) -gui$(FONT_RESET)"
-	@$(TIS_ANALYZER) -D LEVEL2=1 $(TIS_VAL_OPTS) -gui
+tis_l2_gui:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TISA_L2_OPTS) -gui$(FONT_RESET)"
+	@$(TIS_ANALYZER) -D LEVEL2=1 $(TISA_L2_OPTS) -gui
 
-tis_gui_l1:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui | sed '/stack:.*main.c/q'
+tis_l2_step2_gui:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TISA_L2_OPTS) -gui$(FONT_RESET)"
+	@$(TIS_ANALYZER) -D LEVEL2_STEP2=1 $(TISA_L2_OPTS) -gui
 
-tis_l1: tis_report_l1
+tis_l1_gui:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TISA_L1_OPTS) -gui$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TISA_L1_OPTS) -gui | sed '/stack:.*main.c/q'
+
+tis_l1: tis_l1_report
 	tis-report _results/
-	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
+	@printf "\n\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
 
-tis_l2: tis_gui_l2
+tis_l2: tis_l2_gui
+
+tis_l2_step2: tis_l2_step2_gui
 
 clean:
-	rm -rf a.out a.out.dSYM caesar caesar.dSYM *.gcov *.gcda *.gcno _results
+	@rm -rf a.out a.out.dSYM caesar caesar.dSYM *.gcov *.gcda *.gcno _results tis_report.html
