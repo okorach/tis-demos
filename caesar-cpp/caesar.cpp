@@ -33,8 +33,8 @@ std::string Caesar::decrypt(const std::string & input, int offset)
     decrypted.reserve(input.length() + 1);
 
     std::transform( // ranges std::ranges::transform(input, )
-        std::begin(decrypted), std::end(decrypted),
-        std::begin(input),
+        std::begin(input), std::end(input),
+        std::begin(decrypted),
         [
             shift = details::absolute_int(offset)
         ](std::string::value_type c){ return c - shift; }
