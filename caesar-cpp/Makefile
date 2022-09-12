@@ -9,7 +9,7 @@ FONT_RESET := `tput sgr0`
 TIS_ANALYZER := tis-analyzer++
 TIS_VAL_OPTS = -64 -cpp-extra-args=\"-I.\" -val -slevel 100 caesar.cpp main.cpp -no-val-print
 COMPILER := g++
-CPPFLAGS := -std=c++11
+CPPFLAGS := -std=c++14
 
 .PHONY: all cov clean tis_l1 tis_l2 tis_report_l1 tis_report_l2 tis_gui_l1 tis_gui_l2
 
