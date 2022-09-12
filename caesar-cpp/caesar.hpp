@@ -1,19 +1,16 @@
-#ifndef CAESAR_H
-#define CAESAR_H
-#include <memory>
+#pragma once
 
-class Caesar {
-public:
-  Caesar(int o) : offset(o) {}
+#include <string>
+
+namespace Caesar::details {
+  int absolute_int(int x);
+}
+namespace Caesar {
 
   // Ciphers a buffer with a right shift specified by the user
-  char * encrypt(const char * buf, int bufsize) const;
+  std::string encrypt(const std::string & str, int offset);
   
   // Deciphers a buffer with a left shift specified by the user
-  char * decrypt(const char * buf, int bufsize) const;
+  std::string decrypt(const std::string & str, int offset);
+}
 
-private:
-  int absolute_int(int x) const;
-  int offset;
-};
-#endif

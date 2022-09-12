@@ -1,5 +1,7 @@
-#include <stdlib.h>
 #include "caesar.hpp"
+
+#include <algorithm>
+#include <type_traits>
 
 // Ciphers a buffer with a right shift specified by the user
 //  buf: The buffer to encrypt
@@ -7,42 +9,41 @@
 //  offset: The shift to perform
 // returns The pointer to the encrypted string
 
-char * Caesar::encrypt(const char *buf, int bufsize) const
+// TODO: CharT
+// Ciphers a buffer with a right shift specified by the user
+std::string Caesar::encrypt(const std::string & input, int offset)
 {
-    int shift = absolute_int(offset);
-    int i = 0;
+    std::string encrypted;
+    encrypted.reserve(input.length() + 1);
 
-    char * crypted_buffer(new char[bufsize]);
-    while (buf[i])
-    {
-        crypted_buffer[i] = buf[i] + shift;
-        i++;
-    }
-    crypted_buffer[i] = 0;
-    return crypted_buffer;
+    std::transform( // ranges std::ranges::transform(input, )
+        std::begin(input), std::end(input),
+        std::begin(encrypted),
+        [
+            shift = details::absolute_int(offset)
+        ](std::string::value_type c){ return c + shift; }
+    );
+    return encrypted;
 }
 
 // Deciphers a buffer with a right shift specified by the user
-//  buf: The buffer to encrypt
-//  bufsize: The buffer size
-//  offset: The shift to perform
-// returns The pointer to the encrypted string
-char * Caesar::decrypt(const char *buf, int bufsize) const
+std::string Caesar::decrypt(const std::string & input, int offset)
 {
-    int shift = Caesar::absolute_int(offset);
-    int i = 0;
+    std::string decrypted;
+    decrypted.reserve(input.length() + 1);
 
-    char * crypted_buffer(new char[bufsize]);
-    while (buf[i])
-    {
-        crypted_buffer[i] = buf[i] - shift;
-        i++;
-    }
-    crypted_buffer[i] = 0;
-    return crypted_buffer;
+    std::transform( // ranges std::ranges::transform(input, )
+        std::begin(decrypted), std::end(decrypted),
+        std::begin(input),
+        [
+            shift = details::absolute_int(offset)
+        ](std::string::value_type c){ return c - shift; }
+    );
+    return decrypted;
 }
 
-int Caesar::absolute_int(int x) const
+// Compute absolute value
+int Caesar::details::absolute_int(int x)
 {
     int abs_x;
     if (x < 0)

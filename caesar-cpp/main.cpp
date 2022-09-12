@@ -9,13 +9,11 @@
 
 void gen_test(std::string str, int user_shift)
 {
-    Caesar caesar(user_shift);
-
     std::cout << "Encrypt text: '" << str << "'\n";
-    char * res1 = caesar.encrypt(str.c_str(), str.size() + 1);
+    std::string res1 = Caesar::encrypt(str, user_shift);
     std::cout << "Result:       '" << res1 << "'\n";
     std::cout << "Decrypt text: '" << res1 << "'\n";
-    char * res2 = caesar.decrypt(res1, str.size() + 1);
+    std::string res2 = Caesar::decrypt(res1, user_shift);
     std::cout << "Result:       '" << res2 << "'\n";
 }
 
@@ -23,10 +21,10 @@ int main(void)
 {
     std::string str = "People of Earth, your attention please";
 
-    printf("Test 1: Shift with a negative input\n");
-    gen_test(str, -3);
-    printf("\nTest 2: Shift with a positive input\n");
+    std::cout << "Test 1: Shift with a positive input" << std::endl;
     gen_test(str, 7);
+    std::cout << std::endl << "Test 2: Shift with a negative input" << std::endl;
+    gen_test(str, -3);
 
 #ifdef __TRUSTINSOFT_ANALYZER__
 #ifdef LEVEL2
