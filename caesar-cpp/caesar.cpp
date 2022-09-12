@@ -1,5 +1,6 @@
 #include "caesar.hpp"
-
+#include <stdlib.h>
+#include <stdio.h>
 #include <algorithm>
 #include <type_traits>
 
@@ -8,8 +9,7 @@
 std::string Caesar::encrypt(const std::string & input, int offset)
 {
     std::string encrypted;
-    encrypted.reserve(input.length() + 1);
-
+    encrypted.resize(input.length());
     std::transform( // ranges std::ranges::transform(input, )
         std::begin(input), std::end(input),
         std::begin(encrypted),
@@ -24,7 +24,7 @@ std::string Caesar::encrypt(const std::string & input, int offset)
 std::string Caesar::decrypt(const std::string & input, int offset)
 {
     std::string decrypted;
-    decrypted.reserve(input.length() + 1);
+    decrypted.resize(input.length());
 
     std::transform( // ranges std::ranges::transform(input, )
         std::begin(input), std::end(input),
