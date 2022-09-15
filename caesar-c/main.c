@@ -44,6 +44,8 @@ int main(void)
 #else
     char any_str[MAX_BUF+1];
     printf("\nTest 4: Generalization of shift and generalization of string to any %d characters string\n", MAX_BUF);
+
+    tis_make_unknown(any_str, MAX_BUF);
     any_str[MAX_BUF] = '\0';
     if (any_shift != INT_MIN) {
         gen_test(any_str, any_shift);
