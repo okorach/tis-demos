@@ -4,6 +4,7 @@ FONT_BOLD=`tput bold`
 FONT_CYAN=`tput setaf 6`
 FONT_RED=`tput setaf 1`
 FONT_RESET=`tput sgr0`
+SLEEP_TIME=1
 
 MSG="Press [Enter] to proceed: "
 H1="================================================================================"
@@ -36,7 +37,7 @@ printf "\n"
 
 clear
 printf "\n$H2\n${FONT_CYAN}Let's run the program after -O2 compilation\n"
-sleep 2
+sleep $SLEEP_TIME
 printf "clang -O2 toy-ub.c && ./a.out${FONT_RESET}\n"
 
 clang -O2 toy-ub.c && ./a.out
@@ -45,13 +46,13 @@ printf "\nThe value returned is ${FONT_CYAN}1${FONT_RESET}\n\n"
 [ "$steps" = "true" ] && read -p "$MSG" c
 
 printf "\n$H2\n${FONT_CYAN}Now let's run with different compilation options\n"
-sleep 2
+sleep $SLEEP_TIME
 printf "clang     toy-ub.c && ./a.out${FONT_RESET}\n"
 
 clang toy-ub.c && ./a.out
 
 printf "\nThe value returned is ${FONT_CYAN}1073741824${FONT_RESET}\n"
-printf "This value is different due to an ${FONT_RED}invisible undefined behavior${FONT_RESET}\n\n"
+printf "This value is different due to an ${FONT_RED}hidden undefined behavior${FONT_RESET}\n\n"
 [ "$steps" = "true" ] && read -p "$MSG" c
 
 clear
