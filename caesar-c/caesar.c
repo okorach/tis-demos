@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-
+#include "caesar.h"
 #define NB_LTR ('z' - 'a' + 1)
 
 /* Computes absolute value of a signed integer */
@@ -19,7 +19,7 @@ char *caesar_encrypt(char *str, int shift)
 {
     int abs_shift = absolute_int(shift) % NB_LTR;
     int i = 0;
-    char *buf = (char *)malloc(strlen(str)+1);
+    char *buf = (char *)malloc(MAX_BUF+1);
 
     if (buf) {
         while (*str) {
@@ -43,7 +43,7 @@ char *caesar_decrypt(char *str, int shift)
 {
     int abs_shift = absolute_int(shift);
     int i = 0;
-    char *buf = (char *)malloc(strlen(str)+1);
+    char *buf = (char *)malloc(MAX_BUF+1);
 
     if (buf) {
         while (*str) {
