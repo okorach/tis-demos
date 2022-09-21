@@ -61,7 +61,7 @@ report:
 	@ls _results/*.json | sed 's/_results\.json//'
 	@tis-report _results/
 	@printf "\n\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
-	@! grep -H '"status": "NOT OK"' _results/*_results.json
+	@! cat _results/*_results.json|jq '{status: .alarms.status}'|grep -H '"status": "NOT OK"'
 
 clean:
 	@rm -rf a.out a.out.dSYM caesar caesar.dSYM *.gcov *.gcda *.gcno _results tis_report.html
