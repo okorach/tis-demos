@@ -34,11 +34,19 @@ pipeline {
         }
       }
     }
-    stage('Generate TISA report, Check UB') {
+    stage('Generate TISA report') {
       steps {
         script {
           echo "Run TrustInSoft Analyzer"
           sh "make -C caesar-c report"
+        }
+      }
+    }
+    stage('Check absence of UB') {
+      steps {
+        script {
+          echo "Run TrustInSoft Analyzer"
+          sh "make -C caesar-c break_build"
         }
       }
     }
