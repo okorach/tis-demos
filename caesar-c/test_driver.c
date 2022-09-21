@@ -50,7 +50,7 @@ int test_generalized_int(void)
     int ok;
     tis_make_unknown(&any_shift, sizeof(any_shift));
     // any_shift = tis_interval(INT_MIN + 1, INT_MAX);
-printf("\nTest 3: Generalization of shift to any 64 bits signed integer [%ld - %ld]\n", LONG_MIN, LONG_MAX);
+    printf("\nTest 3: Generalization of shift to any 64 bits signed integer [%ld - %ld]\n", LONG_MIN, LONG_MAX);
     ok = gen_test(str, any_shift);
     return ok;
 }
@@ -59,7 +59,7 @@ int test_generalized_string(void)
 {
     int any_shift;
     // tis_make_unknown(&any_shift, sizeof(any_shift));
-    any_shift = tis_interval(INT_MIN + 1, INT_MAX);
+    any_shift = tis_interval(LONG_MIN + 1, LONG_MAX);
     char any_str[MAX_BUF+1];
     printf("\nTest 4: Generalization of shift and generalization of string to any %d characters string\n", MAX_BUF);
 
