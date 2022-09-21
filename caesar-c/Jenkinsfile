@@ -10,7 +10,7 @@ pipeline {
         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: true]], userRemoteConfigs: [[credentialsId: 'GitHub-PAT-Sept-2022-v1', url: 'https://github.com/okorach/tis-demos']]])
       }
     }
-    stage('TISA L1 2 discrete shifts') {
+    stage('TISA L1 discrete tests') {
       steps {
         script {
           echo "Run TrustInSoft Analyzer Level 1 analysis on 2 discrete values"
