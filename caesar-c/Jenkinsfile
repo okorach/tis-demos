@@ -10,11 +10,35 @@ pipeline {
         checkout([$class: 'GitSCM', branches: [[name: '**']], extensions: [[$class: 'CloneOption', noTags: false, reference: '', shallow: true]], userRemoteConfigs: [[credentialsId: 'GitHub-PAT-Sept-2022-v1', url: 'https://github.com/okorach/tis-demos']]])
       }
     }
-    stage('Run TISA') {
+    stage('TISA L1 2 discrete shifts') {
+      steps {
+        script {
+          echo "Run TrustInSoft Analyzer Level 1 analysis on 2 discrete values"
+          sh "make -C caesar-c clean tis_l1"
+        }
+      }
+    }
+    stage('TISA L2 generalize shift') {
       steps {
         script {
           echo "Run TrustInSoft Analyzer"
-          sh "make -C caesar-c clean tis_l1 tis_l2_report tis_l2_step2 report"
+          sh "make -C caesar-c tis_l2_report"
+        }
+      }
+    }
+    stage('TISA L2 generalize string') {
+      steps {
+        script {
+          echo "Run TrustInSoft Analyzer"
+          sh "make -C caesar-c tis_l2_step2 report"
+        }
+      }
+    }
+    stage('Generate TISA report, Check UB') {
+      steps {
+        script {
+          echo "Run TrustInSoft Analyzer"
+          sh "make -C caesar-c report"
         }
       }
     }
