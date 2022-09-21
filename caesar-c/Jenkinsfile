@@ -1,9 +1,9 @@
 pipeline {
   agent any
-  environment {
-      STORE_URL  = credentials('STORE_URL')
-      STORE_TOKEN     = credentials('STORE_TOKEN')
-  }
+//  environment {
+//      STORE_URL  = credentials('STORE_URL')
+//      STORE_TOKEN     = credentials('STORE_TOKEN')
+//  }
   stages {
     stage('Code Checkout') {
       steps {
