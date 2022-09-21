@@ -50,12 +50,12 @@ pipeline {
         }
       }
     }
-    post {
-        always {
-            archiveArtifacts artifacts: 'caesar-c/tis_report.html', fingerprint: true
-            archiveArtifacts artifacts: 'caesar-c/**.json', fingerprint: true
-            archiveArtifacts artifacts: 'caesar-c/**.csv', fingerprint: true
-        }
-    }
+  }
+  post {
+      always {
+          archiveArtifacts artifacts: 'caesar-c/tis_report.html', fingerprint: true
+          archiveArtifacts artifacts: 'caesar-c/**.json', fingerprint: true
+          archiveArtifacts artifacts: 'caesar-c/**.csv', fingerprint: true
+      }
   }
 }
