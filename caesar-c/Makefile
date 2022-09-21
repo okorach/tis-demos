@@ -5,11 +5,11 @@ FONT_CYAN := `tput setaf 6`
 FONT_RED := `tput setaf 1`
 FONT_RESET := `tput sgr0`
 TIS_ANALYZER := tis-analyzer
-FILES := main.c caesar.c
+FILES := test_driver.c caesar.c
 TISA_L2_OPTS = -tis-config-load tis-l2.json
 TISA_L1_OPTS = -tis-config-load tis-l1.json
 
-.PHONY: test cov clean tis_l1 tis_l2 tis_l1_report tis_l2_report tis_l1_gui tis_l2_gui test1 test2 test-int main
+.PHONY: test cov clean tis_l1 tis_l2 tis_l1_report tis_l2_report tis_l1_gui tis_l2_gui test1 test2 test-int
 
 all:
 	@echo -e "$(FONT_CYAN)gcc -I. $(FILES) -o caesar && ./caesar$(FONT_RESET)"

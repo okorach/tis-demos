@@ -57,13 +57,14 @@ int test_generalized_int(void)
 int test_generalized_string(void)
 {
     int any_shift;
-    int ok;
     tis_make_unknown(&any_shift, sizeof(any_shift));
     char any_str[MAX_BUF+1];
     printf("\nTest 4: Generalization of shift and generalization of string to any %d characters string\n", MAX_BUF);
 
     tis_make_unknown(any_str, MAX_BUF);
     any_str[MAX_BUF] = '\0';
+
+    int ok = 1;
     if (any_shift != INT_MIN) {
         ok = gen_test(any_str, any_shift);
     }
@@ -79,7 +80,7 @@ int main(void)
     ok = ok && test2();
 
 #if defined LEVEL2 || defined LEVEL2_STEP2
-    ok = ok && test_generalized_int();
+    // ok = ok && test_generalized_int();
 #ifdef LEVEL2_STEP2
     ok = ok && test_generalized_string();
 #endif
