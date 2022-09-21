@@ -4,7 +4,7 @@
     "val-profile": "analyzer",
     "slevel": 100,
     "files": [
-        "main.c",
+        "caesar.c",
         "test_driver.c"
     ],
     "cpp-extra-args": "-I.",
