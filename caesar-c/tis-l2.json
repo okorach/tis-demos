@@ -1,0 +1,15 @@
+{
+    "machdep": "gcc_x86_64",
+    "val": true,
+    "val-profile": "analyzer",
+    "slevel": 100,
+    "files": [
+        "main.c",
+        "test_driver.c"
+    ],
+    "cpp-extra-args": "-I.",
+    "slevel-function": {
+        "caesar_encrypt": 1000,
+        "caesar_decrypt": 1000
+    }
+}
