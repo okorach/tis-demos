@@ -4,19 +4,21 @@ FONT_BOLD := `tput bold`
 FONT_CYAN := `tput setaf 6`
 FONT_RED := `tput setaf 1`
 FONT_RESET := `tput sgr0`
+
 TIS_ANALYZER := tis-analyzer
 FILES := test_driver.c caesar.c
+COMPILER := gcc
 TIS_OPTS = -tis-config-load tis.json
 
 .PHONY: test cov clean tis_l1 tis_l2 tis_l1_report tis_l2_report tis_l1_gui tis_l2_gui test1 test2 test-int report
 
 all:
-	@echo -e "$(FONT_CYAN)gcc -I. $(FILES) -o caesar && ./caesar$(FONT_RESET)"
-	@gcc -I. $(FILES) -o caesar && ./caesar
+	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o caesar && ./caesar$(FONT_RESET)"
+	@$(COMPILER) -I. $(FILES) -o caesar && ./caesar
 
 cov:
-	@echo -e "$(FONT_CYAN)gcc -I. -fprofile-arcs -ftest-coverage $(FILES) -o caesar && ./caesar$(FONT_RESET)"
-	@gcc -I. -fprofile-arcs -ftest-coverage $(FILES) -o caesar && ./caesar
+	@echo -e "$(FONT_CYAN)$(COMPILER) -I. -fprofile-arcs -ftest-coverage $(FILES) -o caesar && ./caesar$(FONT_RESET)"
+	@$(COMPILER) -I. -fprofile-arcs -ftest-coverage $(FILES) -o caesar && ./caesar
 	@echo ""
 	@echo -e "$(FONT_CYAN)gcov caesar.c $(FONT_RESET)"
 	@gcov caesar.c
@@ -28,7 +30,7 @@ tis_l1_run:
 
 tis_l1_gui:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -gui$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name main -gui | sed '/stack:.*main.c/q'
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name main -gui | sed '/stack:.*test_driver.c/q'
 
 tis_l1: tis_l1_run report
 
