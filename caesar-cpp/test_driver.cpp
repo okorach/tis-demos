@@ -38,7 +38,7 @@ int test2(void)
     return ok;
 }
 
-#if __TRUSTINSOFT_ANALYZER__
+#if defined(__TRUSTINSOFT_ANALYZER__) && defined(LEVEL2)
 int test_generalized_int(void)
 {
     long any_shift;
@@ -76,11 +76,9 @@ int main(void)
     int ok;
     ok = test1();
     ok = ok && test2();
-#ifdef __TRUSTINSOFT_ANALYZER__
-#ifdef LEVEL2
+#if defined(__TRUSTINSOFT_ANALYZER__) && defined (LEVEL2)
     ok = ok && test_generalized_int();
     ok = ok && test_generalized_string();
-#endif
 #endif
 
     if (ok) {
