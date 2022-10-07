@@ -7,46 +7,67 @@ FONT_MAGENTA := `tput setaf 5`
 FONT_RESET := `tput sgr0`
 
 TIS_ANALYZER := tis-analyzer++
-TIS_VAL_OPTS = -64 -cpp-extra-args=\"-I.\" -val -slevel 100 caesar.cpp main.cpp -no-val-print
+FILES := test_driver.cpp caesar.cpp
+TIS_OPTS = -tis-config-load tis.json
 COMPILER := g++
-CPPFLAGS := -std=c++14
+CPPFLAGS := -std=c++17
 
-.PHONY: all cov clean tis_l1 tis_l2 tis_report_l1 tis_report_l2 tis_gui_l1 tis_gui_l2
+.PHONY: test cov clean tis_l1 tis_l2 tis_l1_report tis_l2_report tis_l1_gui tis_l2_gui test1 test2 test-int report
 
 all:
-	@echo -e "$(FONT_CYAN)$(COMPILER) $(CPPFLAGS) -I. caesar.cpp main.cpp -o caesar && ./caesar$(FONT_RESET)"
-	$(COMPILER) $(CPPFLAGS) -I. caesar.cpp main.cpp -o caesar && ./caesar
+	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o caesar && ./caesar$(FONT_RESET)"
+	@$(COMPILER) -I. $(FILES) -o caesar && ./caesar
 
 cov:
-	@echo -e "$(FONT_CYAN)$(COMPILER) -I. -fprofile-arcs -ftest-coverage caesar.cpp main.cpp -o caesar && ./caesar$(FONT_RESET)"
-	@$(COMPILER) -I. -fprofile-arcs -ftest-coverage caesar.cpp main.cpp -o caesar && ./caesar
+	@echo -e "$(FONT_CYAN)$(COMPILER) -I. -fprofile-arcs -ftest-coverage $(FILES) -o caesar && ./caesar$(FONT_RESET)"
+	@$(COMPILER) -I. -fprofile-arcs -ftest-coverage $(FILES) -o caesar && ./caesar
 	@echo ""
-	@echo -e "$(FONT_CYAN) gcov caesar.cpp $(FONT_RESET)"
+	@echo -e "$(FONT_CYAN)gcov caesar.c $(FONT_RESET)"
 	@gcov caesar.cpp
 
-tis_report_l1:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -tis-report | sed '/stack:.*main.cpp/q'
+tis_l1_run:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS)$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name positive-shift
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name negative-shift
 
-tis_report_l2:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_VAL_OPTS) -tis-report$(FONT_RESET)"
-	@$(TIS_ANALYZER) -D LEVEL2=1 $(TIS_VAL_OPTS) -tis-report | sed '/stack:.*main.cpp/q'
+tis_l1_gui:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -gui$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name main -gui | sed '/stack:.*test_driver.cpp/q'
+
+tis_l1: tis_l1_run report
+
+tis_l2_run:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2=1$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1
+
+tis_l2_report: tis_l2_run report
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2=1$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1
+
+tis_l2_gui: tis_l2_report
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_OPTS) -tis-report -gui$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1 -gui
+
+tis_l2: tis_l2_gui
+
+tis_l2_step2_run:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1 -D LEVEL2_STEP2=1
+
+tis_l2_step2_gui:
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1 -gui$(FONT_RESET)"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1  -D LEVEL2_STEP2=1 -gui
+
+tis_l2_step2: tis_l2_step2_run report
+
+report:
+	@printf "Compiling report from past executed tests:\n"
+	@ls _results/*.json | sed 's/_results\.json//'
 	@tis-report _results/
-	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
+	@printf "\n\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
 
-tis_gui_l2:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_VAL_OPTS) -gui$(FONT_RESET)"
-	@$(TIS_ANALYZER) -D LEVEL2=1 $(TIS_VAL_OPTS) -gui | sed '/stack:.*main.cpp/q'
-
-tis_gui_l1:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_VAL_OPTS) -gui | sed '/stack:.*main.cpp/q'
-
-tis_l1: tis_report_l1
-	tis-report _results/
-	@printf "\n\nCheck generated test report $(FONT_CYAN)file:/`pwd`/tis_report.html$(FONT_RESET)\n\n"
-
-tis_l2: tis_gui_l2
+break_build:
+	@! cat _results/*_results.json|jq '{status: .alarms.status}'|grep -H '"status": "NOT OK"'
 
 clean:
-	rm -rf a.out a.out.dSYM caesar caesar.dSYM *.gcov *.gcda *.gcno compile_commands.json tis_report.html _results
+	@rm -rf a.out a.out.dSYM caesar caesar.dSYM *.gcov *.gcda *.gcno _results tis_report.html
