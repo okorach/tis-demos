@@ -3,8 +3,8 @@
     "val": "true",
     "slevel": 1000,
     "val-split-return-function": {
-        "caesar_encrypt": "full",
-        "caesar_decrypt": "full"
+        "_ZN6Caesar7encryptERKSt12basic_stringIcSt11char_traitsIcESt9allocatorIcEEi": "full",
+        "_ZN6Caesar7decryptERKSt12basic_stringIcSt11char_traitsIcESt9allocatorIcEEi": "full"
     },
     "files": [
         "caesar.cpp",
