@@ -41,8 +41,6 @@ tis_l2_run:
 	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1
 
 tis_l2_report: tis_l2_run report
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2=1$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1
 
 tis_l2_gui: tis_l2_report
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_OPTS) -tis-report -gui$(FONT_RESET)"
