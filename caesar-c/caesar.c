@@ -8,6 +8,7 @@
 int absolute_int(long x)
 {
     long abs_x;
+
     if (x < 0)
         abs_x = -x;
     else
