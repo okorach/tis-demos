@@ -42,6 +42,14 @@ pipeline {
         }
       }
     }
+    stage('Generate MISRA report') {
+      steps {
+        script {
+          echo "Run TrustInSoft Analyzer"
+          sh "tis-misra ."
+        }
+      }
+    }
     stage('Check absence of UB') {
       steps {
         script {
@@ -56,6 +64,7 @@ pipeline {
           archiveArtifacts artifacts: 'caesar-c/tis_report.html', fingerprint: true
           archiveArtifacts artifacts: 'caesar-c/_results/**.json', fingerprint: true
           archiveArtifacts artifacts: 'caesar-c/_results/**.csv', fingerprint: true
+          archiveArtifacts artifacts: 'caesar-c/tis_misra_report/**', fingerprint: true
       }
   }
 }
