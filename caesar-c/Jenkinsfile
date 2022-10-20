@@ -46,7 +46,7 @@ pipeline {
       steps {
         script {
           echo "Run TrustInSoft Analyzer"
-          sh "tis-misra ."
+          sh "cd caesar-c; tis-misra ."
         }
       }
     }
