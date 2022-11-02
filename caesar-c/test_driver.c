@@ -49,11 +49,9 @@ int test_generalized_int(void)
     long any_shift;
     int ok = 1;
     tis_make_unknown(&any_shift, sizeof(any_shift));
-    // any_shift = tis_long_interval(INT_MIN + 1, INT_MAX);
+    // any_shift = tis_long_interval(LONG_MIN + 1, LONG_MAX);
     printf("\nTest 3: Generalization of shift to any 64 bits signed integer [%ld - %ld]\n", LONG_MIN, LONG_MAX);
-    if (any_shift != LONG_MIN) {
-        ok = gen_test(str, any_shift);
-    }
+    ok = gen_test(str, any_shift);
     return ok;
 }
 
