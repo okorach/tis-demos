@@ -25,8 +25,8 @@ cov:
 
 tis_l1_run:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS)$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name positive-shift
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name negative-shift
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "1. positive-shift"
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "2. negative-shift"
 
 tis_l1_gui:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -gui$(FONT_RESET)"
@@ -36,25 +36,25 @@ tis_l1: tis_l1_run report
 
 tis_l2_run:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2=1$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "3. generalized-shift" -D LEVEL2=1
 
 tis_l2_report: tis_l2_run report
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2=1$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "3. generalized-shift" -D LEVEL2=1
 
 tis_l2_gui: tis_l2_report
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) -D LEVEL2=1  $(TIS_OPTS) -tis-report -gui$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-shift -D LEVEL2=1 -gui
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "3. generalized-shift" -D LEVEL2=1 -gui
 
 tis_l2: tis_l2_gui
 
 tis_l2_step2_run:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1 -D LEVEL2_STEP2=1
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "4. generalized-string" -D LEVEL2=1 -D LEVEL2_STEP2=1
 
 tis_l2_step2_gui:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1 -gui$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name generalized-string -D LEVEL2=1  -D LEVEL2_STEP2=1 -gui
+	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "4. generalized-string" -D LEVEL2=1  -D LEVEL2_STEP2=1 -gui
 
 tis_l2_step2: tis_l2_step2_run report
 
