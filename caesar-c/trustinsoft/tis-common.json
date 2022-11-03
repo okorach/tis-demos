@@ -7,8 +7,8 @@
         "caesar_decrypt": "full"
     },
     "files": [
-        "caesar.c",
-        "test_driver.c"
+        "../caesar.c",
+        "../test_driver.c"
     ],
     "cpp-extra-args": "-I.",
     "tis-report": true
