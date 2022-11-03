@@ -8,7 +8,7 @@ FONT_RESET := `tput sgr0`
 TIS_ANALYZER := tis-analyzer
 FILES := test_driver.c caesar.c
 COMPILER := gcc
-TIS_OPTS = -tis-config-load tis.json
+TIS_OPTS = -tis-config-load trustinsoft/tis.json
 
 .PHONY: test cov clean tis_l1 tis_l2 tis_l1_report tis_l2_report tis_l1_gui tis_l2_gui test1 test2 test-int report
 
