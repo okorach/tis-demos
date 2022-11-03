@@ -6,11 +6,9 @@ CONFIG="${DIR}/tis.json"
 export CONFIG
 
 function run_analysis {
-   echo "Params = $*"
    analysis_name="$1"
-   config_file="$CONFIG"
    opt=(
-      -tis-config-load "${config_file}"
+      -tis-config-load "${CONFIG}"
       -tis-config-select "${analysis_name}"
       -tis-report
       -save "_results/${analysis_name}.save"
