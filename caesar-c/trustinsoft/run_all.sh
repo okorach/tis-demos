@@ -35,7 +35,7 @@ export -f run_analysis
 
 nbrParallelTests=1
 
-while getopts ":nh" opt; do
+while getopts "n:h" opt; do
    case "$opt" in
       n)
          nbrParallelTests=${OPTARG}
