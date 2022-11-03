@@ -10,6 +10,5 @@
         "../caesar.c",
         "../test_driver.c"
     ],
-    "cpp-extra-args": "-I.",
-    "tis-report": true
+    "cpp-extra-args": "-I."
 }
