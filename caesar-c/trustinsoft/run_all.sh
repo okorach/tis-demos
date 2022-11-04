@@ -1,17 +1,15 @@
 #!/bin/bash
 
 ME=$(basename $0)
-DIR=$(dirname $0)
-CONFIG="${DIR}/tis.json"
+CONFIG="$(dirname $0)/tis.json"
 export CONFIG
 
 function run_analysis {
-   analysis_name="$1"
+   analysis_nbr="$1"
    opt=(
       -tis-config-load "${CONFIG}"
-      -tis-config-select "${analysis_name}"
-      -tis-report
-      -save "_results/${analysis_name}.save"
+      -tis-config-select "${analysis_nbr}"
+      -save "_results/${analysis_nbr}.save"
    )
    tis-analyzer "${opt[@]}"
 }
@@ -32,23 +30,22 @@ EOF
 }
 
 export -f run_analysis
-
-nbrParallelTests=1
+nbr_parallel_tests=1
 
 while getopts "n:h" opt; do
    case "$opt" in
       n)
-         nbrParallelTests=${OPTARG}
+         nbr_parallel_tests=${OPTARG}
          ;;
       *)
          usage
    esac
 done
 
-nbrTests=$(jq '. | length' < ${CONFIG})
+nbr_tests=$(jq '. | length' < ${CONFIG})
 
 echo "Main config file = $CONFIG"
-echo "Total nbr of tests to run = $nbrTests"
-echo "Nbr of tests to run in parallel = $nbrParallelTests"
-parallel -j $nbrParallelTests run_analysis ::: $(seq 1 $nbrTests)
+echo "Total nbr of tests to run = $nbr_tests"
+echo "Nbr of tests to run in parallel = $nbr_parallel_tests"
+parallel -j $nbr_parallel_tests run_analysis ::: $(seq 1 $nbr_tests)
 
