@@ -50,7 +50,7 @@ tis_l2_step2_gui:
 
 report:
 	@printf "Compiling report from past executed tests:\n"
-#	@rm _results/analysis-*.json
+	@rm -f _results/analysis-*.json
 	@ls _results/*.json | sed 's/_results\.json//'
 	@tis-report _results/
 	@printf "\n\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
