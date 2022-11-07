@@ -39,13 +39,13 @@ EOF
 }
 
 export -f run_analysis
-nbr_parallel_tests=1
+nbr_parallel_analyses=1
 
 while [ $# -ne 0 ]; do
    case "${1}" in
       -n)
          shift
-         nbr_parallel_tests=${1}
+         nbr_parallel_analyses=${1}
          ;;
       *)
          echo "Wrong argument ${1}"
@@ -55,10 +55,10 @@ while [ $# -ne 0 ]; do
    shift
 done
 
-nbr_tests=$(jq '. | length' < ${CONFIG})
+nbr_analyses=$(jq '. | length' < ${CONFIG})
 
 echo "Main config file = $CONFIG"
-echo "Total nbr of tests to run = $nbr_tests"
-echo "Nbr of tests to run in parallel = $nbr_parallel_tests"
-parallel -j $nbr_parallel_tests run_analysis ::: $(seq 1 $nbr_tests)
+echo "Total nbr of analyses to run = $nbr_analyses"
+echo "Nbr of analyses to run in parallel = $nbr_parallel_analyses"
+parallel -j $nbr_parallel_analyses run_analysis ::: $(seq 1 $nbr_analyses)
 
