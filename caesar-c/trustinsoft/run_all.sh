@@ -7,10 +7,10 @@ export CONFIG DIR
 
 if [ ! $(which jq) ]; then
    echo "Please install 'jq' to run $ME"
-   exit 1
+   exit 2
 elif [ ! $(which parallel) ]; then
    echo "Please install 'parallel' to run $ME"
-   exit 2
+   exit 3
 fi
 
 function run_analysis {
