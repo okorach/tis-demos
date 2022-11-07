@@ -1,8 +1,17 @@
 #!/bin/bash
 
 ME=$(basename $0)
-CONFIG="$(dirname $0)/tis.json"
-export CONFIG
+DIR="$(dirname $0)"
+CONFIG="${DIR}/tis.json"
+export CONFIG DIR
+
+if [ ! $(which jq) ]; then
+   echo "Please install 'jq' to run $ME"
+   exit 1
+elif [ ! $(which parallel) ]; then
+   echo "Please install 'parallel' to run $ME"
+   exit 2
+fi
 
 function run_analysis {
    analysis_nbr="$1"
@@ -11,7 +20,7 @@ function run_analysis {
       -tis-config-select "${analysis_nbr}"
       -save "_results/${analysis_nbr}.save"
    )
-   tis-analyzer "${opt[@]}"
+   tis-analyzer "${opt[@]}" | tee "${DIR}/analysis.${analysis_nbr}.log"
 }
 
 function usage {
@@ -32,14 +41,18 @@ EOF
 export -f run_analysis
 nbr_parallel_tests=1
 
-while getopts "n:h" opt; do
-   case "$opt" in
-      n)
-         nbr_parallel_tests=${OPTARG}
+while [ $# -ne 0 ]; do
+   case "${1}" in
+      -n)
+         shift
+         nbr_parallel_tests=${1}
          ;;
       *)
+         echo "Wrong argument ${1}"
          usage
+         ;;
    esac
+   shift
 done
 
 nbr_tests=$(jq '. | length' < ${CONFIG})
