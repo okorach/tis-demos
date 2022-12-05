@@ -10,5 +10,7 @@
         "../caesar.c",
         "../test_driver.c"
     ],
-    "cpp-extra-args": "-I."
+    "cpp-extra-args": "-I.",
+    "whole-program-graph": "true",
+    "mcdc": "true"
 }
