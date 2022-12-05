@@ -52,7 +52,7 @@ report:
 	@printf "Compiling report from past executed tests:\n"
 	@rm -f _results/analysis-*.json
 	@ls _results/*.json | sed 's/_results\.json//'
-	@tis-report _results/
+	@tis-report _results/ --skip-file test_driver.c
 	@printf "\n\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
 
 break_build:
