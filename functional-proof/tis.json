@@ -1,0 +1,34 @@
+[
+    {
+        "machdep": "gcc_x86_64",
+        "val": "true",
+        "slevel": 1000,
+        "files": [
+            "check_all_zeros.cpp"
+        ],
+        "cpp-extra-args": "-I.",
+        "whole-program-graph": "true",
+        "mcdc": "true",
+        "name": "check_all_zeros",
+        "val-profile": "analyzer",
+        "deps": "false",
+        "graphdeps": "false"
+    },
+    {
+        "machdep": "gcc_x86_64",
+        "val": "true",
+        "slevel": 1000,
+        "files": [
+            "quicksort.c",
+            "test_driver.c"
+        ],
+        "cpp-extra-args": "-I.",
+        "whole-program-graph": "true",
+        "mcdc": "true",
+        "name": "quicksort",
+        "val-profile": "analyzer",
+        "main": "test_quicksort",
+        "deps": "true",
+        "graphdeps": "true"
+    }
+]
