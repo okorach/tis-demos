@@ -1,0 +1,19 @@
+[
+    {
+        "machdep": "gcc_x86_64",
+        "val": "true",
+        "slevel": 1000,
+        "files": [
+            "smart_meter.c",
+            "test_driver.c"
+        ],
+        "cpp-extra-args": "-I.",
+        "whole-program-graph": "true",
+        "mcdc": "true",
+        "name": "dependency-analysis",
+        "val-profile": "analyzer",
+        "main": "main",
+        "deps": "true",
+        "graphdeps": "true"
+    }
+]
