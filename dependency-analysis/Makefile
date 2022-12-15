@@ -1,9 +1,6 @@
 SHELL := /bin/bash
 
-FONT_BOLD := `tput bold`
 FONT_CYAN := `tput setaf 6`
-FONT_RED := `tput setaf 1`
-FONT_RESET := `tput sgr0`
 
 TIS_ANALYZER := tis-analyzer
 FILES := test_driver.c $(TARGET).c
