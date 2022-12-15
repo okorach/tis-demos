@@ -14,15 +14,15 @@ TIS_OPTS = -tis-config-load tis.json
 .PHONY: test clean tis tis_gui
 
 all:
-	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o $(TARGET) && ./$(TARGET)$(FONT_RESET)"
+	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o $(TARGET) && ./$(TARGET)"
 	@$(COMPILER) -I. $(FILES) -o $(TARGET) && ./$(TARGET)
 
 tis:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS)$(FONT_RESET)"
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS)"
 	@$(TIS_ANALYZER) $(TIS_OPTS) -gui
 
 tis_cli:
-	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER)  $(TIS_OPTS) -gui$(FONT_RESET)"
+	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER)  $(TIS_OPTS) -gui"
 	@$(TIS_ANALYZER) $(TIS_OPTS)
 
 clean:
