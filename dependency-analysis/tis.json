@@ -12,7 +12,6 @@
         "mcdc": "true",
         "name": "dependency-analysis",
         "val-profile": "analyzer",
-        "main": "main",
         "deps": "true",
         "graphdeps": "true"
     }
