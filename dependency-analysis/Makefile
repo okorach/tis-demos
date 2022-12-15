@@ -23,4 +23,4 @@ tis_cli:
 	@$(TIS_ANALYZER) $(TIS_OPTS)
 
 clean:
-	@rm -rf a.out a.out.dSYM $(TARGET) $(TARGET).dSYM *.gcov *.gcda *.gcno _results tis_report.html tis_misra_report *.log */*.log
+	@rm -rf $(TARGET) $(TARGET).dSYM *.log */*.log
