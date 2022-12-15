@@ -8,7 +8,7 @@ TARGET := smart_meter
 COMPILER := gcc
 TIS_OPTS = -tis-config-load tis.json 
 
-.PHONY: test clean tis tis_gui
+.PHONY: test clean tis tis_cli
 
 all:
 	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o $(TARGET) && ./$(TARGET)"
