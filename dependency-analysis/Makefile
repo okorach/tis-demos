@@ -10,18 +10,11 @@ FILES := test_driver.c smart_meter.c
 COMPILER := gcc
 TIS_OPTS = -tis-config-load tis.json 
 
-.PHONY: test cov clean tis tis_gui
+.PHONY: test clean tis tis_gui
 
 all:
 	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o smart_meter && ./smart_meter$(FONT_RESET)"
 	@$(COMPILER) -I. $(FILES) -o smart_meter && ./smart_meter
-
-cov:
-	@echo -e "$(FONT_CYAN)$(COMPILER) -I. -fprofile-arcs -ftest-coverage $(FILES) -o smart_meter && ./smart_meter$(FONT_RESET)"
-	@$(COMPILER) -I. -fprofile-arcs -ftest-coverage $(FILES) -o smart_meter && ./smart_meter
-	@echo ""
-	@echo -e "$(FONT_CYAN)gcov smart_meter.c $(FONT_RESET)"
-	@gcov smart_meter.c
 
 tis:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS)$(FONT_RESET)"
