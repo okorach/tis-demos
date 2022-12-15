@@ -6,15 +6,16 @@ FONT_RED := `tput setaf 1`
 FONT_RESET := `tput sgr0`
 
 TIS_ANALYZER := tis-analyzer
-FILES := test_driver.c smart_meter.c
+FILES := test_driver.c $(TARGET).c
+TARGET := smart_meter
 COMPILER := gcc
 TIS_OPTS = -tis-config-load tis.json 
 
 .PHONY: test clean tis tis_gui
 
 all:
-	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o smart_meter && ./smart_meter$(FONT_RESET)"
-	@$(COMPILER) -I. $(FILES) -o smart_meter && ./smart_meter
+	@echo -e "$(FONT_CYAN)$(COMPILER) -I. $(FILES) -o $(TARGET) && ./$(TARGET)$(FONT_RESET)"
+	@$(COMPILER) -I. $(FILES) -o $(TARGET) && ./$(TARGET)
 
 tis:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS)$(FONT_RESET)"
@@ -25,4 +26,4 @@ tis_cli:
 	@$(TIS_ANALYZER) $(TIS_OPTS)
 
 clean:
-	@rm -rf a.out a.out.dSYM smart_meter smart_meter.dSYM *.gcov *.gcda *.gcno _results tis_report.html tis_misra_report *.log */*.log
+	@rm -rf a.out a.out.dSYM $(TARGET) $(TARGET).dSYM *.gcov *.gcda *.gcno _results tis_report.html tis_misra_report *.log */*.log
