@@ -23,37 +23,50 @@ cov:
 	@echo -e "$(FONT_CYAN)gcov caesar.c $(FONT_RESET)"
 	@gcov caesar.c
 
-tis_l1:
+tis_l1_run:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS)$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "1.positive-shift"
 	@$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name "2.negative-shift"
+	@echo "==============================================="
+	@echo "      " `trustinsoft/count_ub.sh _results/[12].*-shift_results.json` UNDEFINED BEHAVIORS FOUND
+	@echo "==============================================="
 
-tis_l2:
+tis_l1: tis_l1_run report
+
+tis_l2: tis_l2_run report
+
+tis_l2_run:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2$(FONT_RESET)"
-	@$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2 -tis-config-select-by-name "3.generalized-shift" 
+	@$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2 -tis-config-select-by-name "3.generalized-shift"
+	@echo "==============================================="
+	@echo "      " `trustinsoft/count_ub.sh _results/3.generalized-shift_results.json` UNDEFINED BEHAVIORS FOUND
+	@echo "==============================================="
 
-tis_l2_step2:
+tis_l2_step2_run:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2 -D LEVEL2_STEP2$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_OPTS) -D LEVEL2 -D LEVEL2_STEP2 -tis-config-select-by-name "4.generalized-string" 
+	@echo "==============================================="
+	@echo "      " `trustinsoft/count_ub.sh _results/4.generalized-string_results.json` UNDEFINED BEHAVIORS FOUND
+	@echo "==============================================="
+
+tis_l2_step2: tis_l2_step2_run report
 
 tis_l1_gui:
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -gui$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_OPTS) -gui # -tis-config-select-by-name main -gui | sed '/stack:.*test_driver.c/q'
 
-tis_l2_gui:
+tis_l2_gui: tis_l2_run report
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER)  $(TIS_OPTS) -gui -D LEVEL2$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_OPTS) -gui -D LEVEL2 -tis-config-select-by-name "3.generalized-shift"
 
-tis_l2_step2_gui:
+tis_l2_step2_gui: tis_l2_step2_run report
 	@echo -e "$(FONT_CYAN)$(TIS_ANALYZER) $(TIS_OPTS) -tis-config-select-by-name 4.generalized-string -D LEVEL2=1 -gui$(FONT_RESET)"
 	@$(TIS_ANALYZER) $(TIS_OPTS) -gui -D LEVEL2 -D LEVEL2_STEP2 -tis-config-select-by-name "4.generalized-string" 
 
 report:
-	@printf "Compiling report from past executed tests:\n"
-	@rm -f _results/analysis-*.json
-	@ls _results/*.json | sed 's/_results\.json//'
+	@echo "Compiling report from" `ls _results/*.json | wc -l` "past executed tests"
 	@tis-report _results/ --skip-file test_driver.c
-	@printf "\n\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
+	@printf "\nCheck generated test report $(FONT_CYAN)tis_report.html$(FONT_RESET)\n\n"
 
 break_build:
 	@! cat _results/*_results.json|jq '{status: .alarms.status}'|grep -H '"status": "NOT OK"'
